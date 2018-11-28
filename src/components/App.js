@@ -10,7 +10,7 @@ class App extends Component {
     store.dispatch(setActiveSession(activeSession));
   };
 
-  dispatchChangeCounter = e => {
+  dispatchUpdateCounter = e => {
       const type = e.target.dataset.type;
       const changeAmount = type === 'INCREASE_COUNTER' ? 1 : -1;
       store.dispatch(updateCounter(type, changeAmount));
@@ -81,10 +81,10 @@ class App extends Component {
             </div>
           </main>
           <div className="App__buttons">
-            <button className="App__text--white" onClick={this.dispatchChangeCounter} data-type="INCREASE_COUNTER">
+            <button className="App__text--white" onClick={this.dispatchUpdateCounter} data-type="INCREASE_COUNTER">
               INCREASE
             </button>
-            <button className="App__text--white" onClick={this.dispatchChangeCounter
+            <button className="App__text--white" onClick={this.dispatchUpdateCounter
             } data-type="DECREASE_COUNTER">
               DECREASE
             </button>
