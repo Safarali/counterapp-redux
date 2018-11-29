@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { store } from '../store';
+import { connect } from 'react-redux';
 import { setActiveSession, updateCounter } from '../actions';
 import "../App.css";
 
@@ -7,17 +7,17 @@ class App extends Component {
 
   dispatchSetActiveSession = e => {
     const activeSession = e.target.value;
-    store.dispatch(setActiveSession(activeSession));
+    this.props.setActiveSession(activeSession);
   };
 
   dispatchUpdateCounter = e => {
       const type = e.target.dataset.type;
       const changeAmount = type === 'INCREASE_COUNTER' ? 1 : -1;
-      store.dispatch(updateCounter(type, changeAmount));
+      this.props.updateCounter(type, changeAmount);
   };
 
   render() {
-    const { days, hours, minutes, seconds, activeSession } = store.getState();
+    const { days, hours, minutes, seconds, activeSession } = this.props;
 
     return (
       <div className="App">
@@ -95,4 +95,22 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  days: state.days,
+  hours: state.hours,
+  minutes: state.minutes,
+  seconds: state.seconds,
+  activeSession: state.activeSession
+});
+
+const mapDispatchToProps = {
+  setActiveSession,
+  updateCounter
+};
+
+// const mapDispatchToProps = (dispatch) => ({
+//   setActiveSession: (activeSession) => dispatch(setActiveSession(activeSession)),
+//   updateCounter: (type, changeAmount) => dispatch(updateCounter(type, changeAmount))
+// })
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
